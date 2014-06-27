@@ -4,7 +4,7 @@
  * 
  *
  * @author Maurizio Cingolani
- * @version 1.0.9
+ * @version 1.0.10
  */
 class Bootstrap extends CApplicationComponent {
 
@@ -51,9 +51,17 @@ class Bootstrap extends CApplicationComponent {
         return Html::tag('button', $htmlOptions, $text, true);
     }
 
+    /**
+     * Crea un <input> di tipo checkbox.
+     * 
+     * @param CModel $model Modello della form
+     * @param type $attribute Attributo del modello della form
+     * @param array $htmlOptions Opzioni
+     * @return type
+     */
     public static function CheckBox(CModel $model, $attribute, array $htmlOptions = null) {
-        $htmlOptions = self::AddClasses();
-        $field = self::InputField('checkbox', $model, $attribute);
+        $htmlOptions = self::AddClasses(null, $htmlOptions);
+        $field = self::InputField('checkbox', $model, $attribute, $htmlOptions);
         return $field;
     }
 
@@ -86,7 +94,7 @@ class Bootstrap extends CApplicationComponent {
      * @return string Tag Html
      */
     public static function CurrencyField(CModel $model, $attribute, array $htmlOptions = null) {
-        $htmlOptions = self::AddClasses(array('currency'));
+        $htmlOptions = self::AddClasses(array('currency'), $htmlOptions);
         self::CreateDataProps($model->getValidators($attribute), $htmlOptions);
         $htmlOptions['data-currency'] = 'true';
         $field = self::TextField($model, $attribute, $htmlOptions);
@@ -210,7 +218,7 @@ class Bootstrap extends CApplicationComponent {
                     'src' => $model->{$attribute},
         ));
         $tag.=Html::openTag('p');
-        $tag.=Html::tag('span', array('class'=>'btn btn-xs btn-primary btn-file'), 'Scegli... <input type="file">');
+        $tag.=Html::tag('span', array('class' => 'btn btn-xs btn-primary btn-file'), 'Scegli... <input type="file">');
         $tag.=self::Button('button', 'Pulisci', array(
                     'id' => get_class($model) . ($attribute ? '_' . $attribute : '' ) . '_clear',
                     'data-toggle' => 'tooltip',
