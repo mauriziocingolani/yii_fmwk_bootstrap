@@ -2,7 +2,7 @@
 
 /**
  * @author Maurizio Cingolani
- * @version 1.0.12
+ * @version 1.0.13
  */
 class Bootstrap extends CApplicationComponent {
 
@@ -478,6 +478,8 @@ class Bootstrap extends CApplicationComponent {
                 $htmlOptions['data-propercase'] = 'true';
             elseif ($validator instanceof TrimValidator) :
                 $htmlOptions['data-trim'] = 'true';
+            elseif ($validator instanceof CSafeValidator) :
+            // Evito che venga sollevata l'eccezione se devo dichiare safe un attributo
             else :
                 throw new CException(__METHOD__ . ': validator ' . get_class($validator) . ' not supported.');
             endif;
